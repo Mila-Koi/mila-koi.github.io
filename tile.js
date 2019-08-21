@@ -1,6 +1,7 @@
 class Tile{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   constructor(letter, x, y, width){
     this.width = width;
     this.letter = letter;
@@ -29,13 +30,17 @@ class Tile{
   constructor(letter, x, y){
 >>>>>>> 36a4067 (mew)
     this.width = 40;
+=======
+  constructor(letter, x, y, width){
+    this.width = width;
+>>>>>>> 7d06e29 (mew)
     this.letter = letter;
     this.x = x;
     this.y = y;
     this.onBoard = false;
     this.committedToBoard = false;
-    this.boardX = 0;
-    this.boardY = 0;
+    this.boardX = -1;
+    this.boardY = -1;
   }
 
   drawTile(){
