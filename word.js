@@ -20,7 +20,11 @@ let dragOffsetX;
 let dragOffsetY;
 let tileRestingPositions = [];
 let alertDebounce = 0;
+<<<<<<< HEAD
 let debounceAmount = 15;
+=======
+let debounceAmount = 1;
+>>>>>>> 5dd1cef (mew)
 let maxTiles = 7;
 let occupiedPositions = [];
 let committedPositions = [];
@@ -28,10 +32,35 @@ let tileOrigX;
 let tileOrigY;
 let restingY;
 let bottomPanelHeight = 75;
+<<<<<<< HEAD
+=======
+let database;
+let alertImg;
+let alertOpacity;
+let displayAlert;
+let alertMsg;
+
+// Your web app's Firebase configuration
+let firebaseConfig = {
+  apiKey: "AIzaSyD0U11kZmsJRZIoZveUkNSsfpqTyzFdKl4",
+  authDomain: "word-a8b6a.firebaseapp.com",
+  databaseURL: "https://word-a8b6a.firebaseio.com",
+  projectId: "word-a8b6a",
+  storageBucket: "word-a8b6a.appspot.com",
+  messagingSenderId: "1056186017327",
+  appId: "1:1056186017327:web:ebfa927c3f923a35"
+};
+>>>>>>> 5dd1cef (mew)
 
 function preload(){
   dictionaryHalf1 = loadStrings("https://gist.githubusercontent.com/dlayres/5919e00889614b854092b86d76d55815/raw/6025c962aaa62766140a9ea0bfadba9dd4d07e61/dictHalf1.txt");
   dictionaryHalf2 = loadStrings("https://gist.githubusercontent.com/dlayres/de5c600219a07c1dd3a1589293cdf3b4/raw/51af4ebfea0538b55f5f43cc8dd9a5863dcadf97/dictHalf2.txt");
+<<<<<<< HEAD
+=======
+  firebase.initializeApp(firebaseConfig);
+  database = firebase.firestore();
+  alertImage = loadImage("alert.png");
+>>>>>>> 5dd1cef (mew)
 }
 
 function setup(){
@@ -52,6 +81,26 @@ function setup(){
                        "N", "O", "O", "O", "O", "O", "O", "O", "O", "P", "P", "Q", "R", "R", "R", "R", "R", "R", "S", "S", "S", "S", "T", "T", "T", "T", "T", "T", "U",
                        "U", "U", "U", "V", "V", "W", "W", "X", "Y", "Y", "Z"];
 
+<<<<<<< HEAD
+=======
+  // Get preexisting tiles from database
+  database.collection("tiles").get().then((query) => {
+    query.forEach((doc) => {
+      let tileLetter = doc.data().tileLetter;
+      let xPosition = doc.data().xPosition;
+      let yPosition = doc.data().yPosition;
+      allTiles.push(new Tile(tileLetter, xPosition * gridSpacing + userPos.x, yPosition * gridSpacing + userPos.y, tileWidth));
+      let lastIndex = allTiles.length - 1;
+      allTiles[lastIndex].onBoard = true;
+      allTiles[lastIndex].committedToBoard = true;
+      allTiles[lastIndex].boardX = xPosition;
+      allTiles[lastIndex].boardY = yPosition;
+      occupiedPositions.push(createVector(xPosition, yPosition));
+      committedPositions.push(createVector(xPosition, yPosition));
+    });
+  });
+
+>>>>>>> 5dd1cef (mew)
   restingY = windowHeight - bottomPanelHeight + ((bottomPanelHeight - tileWidth) / 2);
   for(let i = 0; i < maxTiles; i++){
     tileRestingPositions.push(createVector((tileWidth + 10) * (i + 4), restingY));
@@ -94,6 +143,13 @@ function draw(){
   if(draggingTile){
     userTiles[draggingTileIndex].drawTile();
   }
+<<<<<<< HEAD
+=======
+
+  if(displayAlert){
+    image(alertImg, 0, 0);
+  }
+>>>>>>> 5dd1cef (mew)
 }
 
 function windowResized(){
@@ -112,10 +168,18 @@ function mouseWheel(event){
 */
 
 function mouseDragged(event){
+<<<<<<< HEAD
+=======
+  console.log(canDrag);
+>>>>>>> 5dd1cef (mew)
   if(alertDebounce != 0){
     canDrag = false;
   }
   else if(canDrag){
+<<<<<<< HEAD
+=======
+    console.log("shouldDrag");
+>>>>>>> 5dd1cef (mew)
     userPos.add(createVector(event.movementX, event.movementY));
     for(let i = 0; i < allTiles.length; i++){
       if(allTiles[i].onBoard){
@@ -368,7 +432,11 @@ function checkWord(){
         }
         successAlert += (wordList[wordList.length - 1].toUpperCase() + " played successfully.");
         commitWord(tileIndices);
+<<<<<<< HEAD
         sendAlert(successAlert);
+=======
+        //sendAlert(successAlert);
+>>>>>>> 5dd1cef (mew)
         return;
       }
     }
@@ -442,7 +510,11 @@ function checkWord(){
         }
         successAlert += (wordList[wordList.length - 1].toUpperCase() + " played successfully.");
         commitWord(tileIndices);
+<<<<<<< HEAD
         sendAlert(successAlert);
+=======
+        //sendAlert(successAlert);
+>>>>>>> 5dd1cef (mew)
         return;
       }
     }
@@ -463,8 +535,14 @@ function checkDictionary(word){
 }
 
 function sendAlert(msg){
+<<<<<<< HEAD
   alert(msg);
   alertDebounce = debounceAmount;
+=======
+  displayAlert = true;
+  alertMsg = msg;
+  alertOpacity = 0;
+>>>>>>> 5dd1cef (mew)
 }
 
 function drawGrid(pos){
@@ -654,6 +732,18 @@ function getVerticalAdjacencies(boardTiles, xPositions, yPositions){
 function commitWord(indices){
   for(let i = 0; i < indices.length; i++){
     userTiles[indices[i]].committedToBoard = true;
+<<<<<<< HEAD
+=======
+    database.collection("tiles").add({
+      tileLetter: userTiles[indices[i]].letter,
+      xPosition: userTiles[indices[i]].boardX,
+      yPosition: userTiles[indices[i]].boardY
+    })
+    .catch(function(error){
+      console.error("Error adding document: " + error);
+    })
+
+>>>>>>> 5dd1cef (mew)
     let tileLetter = tilePossibilities[Math.floor(Math.random() * tilePossibilities.length)];
     userTiles[indices[i]] = new Tile(tileLetter, tileRestingPositions[i].x, tileRestingPositions[i].y, tileWidth);
     allTiles.push(userTiles[indices[i]]);
