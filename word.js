@@ -85,6 +85,7 @@ function preload(){
   dictionaryHalf2 = loadStrings("https://gist.githubusercontent.com/dlayres/de5c600219a07c1dd3a1589293cdf3b4/raw/51af4ebfea0538b55f5f43cc8dd9a5863dcadf97/dictHalf2.txt");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   firebase.initializeApp(firebaseConfig);
   database = firebase.firestore();
@@ -96,6 +97,9 @@ function preload(){
 >>>>>>> b7c8ece (mew)
 =======
   firebaseAPIKey = loadStrings("https://raw.githubusercontent.com/dlayres/fire-gist/master/api.txt?token=AIQ7QVMARAGZT26BNCIHZWK5N3324",
+=======
+  firebaseAPIKey = loadStrings("https://raw.githubusercontent.com/dlayres/fire-gist/master/api.txt?token=AIQ7QVKY4VUET5BTYFHFXEC5PE43O",
+>>>>>>> 7558169 (mew)
     () => {
       firebaseConfig = {
         apiKey: firebaseAPIKey[0],
@@ -646,9 +650,6 @@ function shuffleTiles(){
       boardTiles.push(userTiles[i]);
     }
   }
-
-  console.log(boardTileIndices);
-
 
   for(let i = 0; i < numBoardTiles; i++){
     for(let j = maxTiles - 1; j >= 0; j--){
