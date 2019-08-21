@@ -36,6 +36,7 @@ class Tile{
       }
     }
     stroke(0, 0, 0);
+    strokeWeight(2)
     square(this.x, this.y, this.width);
     fill(255, 255, 255);
 <<<<<<< HEAD
