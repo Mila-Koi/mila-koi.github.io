@@ -11,7 +11,7 @@ let submitBlankButton;
 let userPos;
 let gridSpacing = 60;
 let scrollFactor = 0.015;
-let userPoints = 0;
+let userPoints = [];
 let userTiles = [];
 let allTiles = [];
 let tilePossibilities = [];
@@ -75,7 +75,13 @@ let firebaseConfig;
 =======
 let tilePlaceSound;
 let tilePlaceSoundLow;
+<<<<<<< HEAD
 >>>>>>> e9da3d3 (mew)
+=======
+let numPlayers = 0;
+let playerTurn = 0;
+let playerNames = [];
+>>>>>>> cfaa322 (mew)
 
 function preload(){
   soundFormats('mp3', 'ogg');
@@ -119,6 +125,12 @@ function preload(){
 }
 
 function setup(){
+  numPlayers = prompt("Number of players");
+  for(let i = 0; i < numPlayers; i++){
+    userPoints.push(0);
+    playerNames.push(prompt("Player " + (i + 1)));
+  }
+
   createCanvas(windowWidth, windowHeight);
   dictionary = dictionaryHalf1.concat(dictionaryHalf2);
   submitWordButton = createButton("Submit Word");
@@ -275,7 +287,7 @@ function draw(){
   fill(0, 0, 0);
   noStroke();
   textSize(tileWidth / 2.5);
-  text("Points: " + userPoints, submitWordButton.width + 35, windowHeight - 30);
+  text(playerNames[playerTurn] + ": " + userPoints[playerTurn], submitWordButton.width + 35, windowHeight - 30);
 
   let numBoardTiles = 0;
   for(let i = 0; i < userTiles.length; i++){
@@ -791,8 +803,8 @@ function checkWord(){
         }
         successAlert += (wordList[wordList.length - 1][0].toUpperCase() + " played successfully.");
         totalPoints += wordList[wordList.length - 1][1];
+        userPoints[playerTurn] += totalPoints;
         commitWord(tileIndices);
-        userPoints += totalPoints;
         //sendAlert(successAlert);
 <<<<<<< HEAD
 >>>>>>> 5dd1cef (mew)
@@ -877,8 +889,8 @@ function checkWord(){
         }
         successAlert += (wordList[wordList.length - 1][0].toUpperCase() + " played successfully.");
         totalPoints += wordList[wordList.length - 1][1];
+        userPoints[playerTurn] += totalPoints;
         commitWord(tileIndices);
-        userPoints += totalPoints;
         //sendAlert(successAlert);
 <<<<<<< HEAD
 >>>>>>> 5dd1cef (mew)
@@ -1134,6 +1146,15 @@ function commitWord(indices){
   for(let i = 0; i < occupiedPositions.length; i++){
     committedPositions.push(occupiedPositions[i]);
   }
+
+  playerTurn++;
+  playerTurn = playerTurn % numPlayers;
+
+  console.log("-------------------------------------------");
+  for(let i = 0; i < numPlayers; i++){
+    console.log(playerNames[i] + ": " + userPoints[i]);
+  }
+  console.log("-------------------------------------------");
 }
 
 function shiftTiles(startingIndex, endingIndex){
