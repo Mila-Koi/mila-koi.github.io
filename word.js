@@ -39,10 +39,11 @@ let alertImg;
 let alertOpacity;
 let displayAlert;
 let alertMsg;
+let firebaseAPIKey = databaseConfig.firebaseKey;
 
 // Your web app's Firebase configuration
 let firebaseConfig = {
-  apiKey: "AIzaSyD0U11kZmsJRZIoZveUkNSsfpqTyzFdKl4",
+  apiKey: firebaseAPIKey, 
   authDomain: "word-a8b6a.firebaseapp.com",
   databaseURL: "https://word-a8b6a.firebaseio.com",
   projectId: "word-a8b6a",
@@ -59,8 +60,12 @@ function preload(){
 =======
   firebase.initializeApp(firebaseConfig);
   database = firebase.firestore();
+<<<<<<< HEAD
   alertImage = loadImage("alert.png");
 >>>>>>> 5dd1cef (mew)
+=======
+  alertImg = loadImage("https://gist.githubusercontent.com/dlayres/c71fafd0b454a46cccc2543fc6ee5163/raw/c701f7a490436b84f34166414eed2591cedae3c3/alert.png");
+>>>>>>> b7c8ece (mew)
 }
 
 function setup(){
@@ -146,8 +151,26 @@ function draw(){
 <<<<<<< HEAD
 =======
 
-  if(displayAlert){
-    image(alertImg, 0, 0);
+  if(displayAlert == "inc" || displayAlert == "dec"){
+    tint(255, alertOpacity);
+    let width = alertImg.width;
+    let emptySideWidth = (windowWidth - width) / 2;
+    image(alertImg, emptySideWidth, 10);
+    textSize(alertImg.height * 0.55);
+    let textEmptySideWidth = (width - textWidth(alertMsg)) / 2;
+    text(alertMsg, emptySideWidth + textEmptySideWidth, 48);
+    if(displayAlert == "inc"){
+      alertOpacity+=10;
+    }
+    else{
+      alertOpacity-=10;
+    }
+    if(alertOpacity == 2000){
+      displayAlert = "dec";
+    }
+    else if(alertOpacity == 0){
+      displayAlert = 0;
+    }
   }
 >>>>>>> 5dd1cef (mew)
 }
@@ -169,17 +192,23 @@ function mouseWheel(event){
 
 function mouseDragged(event){
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   console.log(canDrag);
 >>>>>>> 5dd1cef (mew)
+=======
+>>>>>>> b7c8ece (mew)
   if(alertDebounce != 0){
     canDrag = false;
   }
   else if(canDrag){
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     console.log("shouldDrag");
 >>>>>>> 5dd1cef (mew)
+=======
+>>>>>>> b7c8ece (mew)
     userPos.add(createVector(event.movementX, event.movementY));
     for(let i = 0; i < allTiles.length; i++){
       if(allTiles[i].onBoard){
@@ -536,10 +565,15 @@ function checkDictionary(word){
 
 function sendAlert(msg){
 <<<<<<< HEAD
+<<<<<<< HEAD
   alert(msg);
   alertDebounce = debounceAmount;
 =======
   displayAlert = true;
+=======
+  // Alert should start by increasing in opacity
+  displayAlert = "inc";
+>>>>>>> b7c8ece (mew)
   alertMsg = msg;
   alertOpacity = 0;
 >>>>>>> 5dd1cef (mew)
