@@ -1,5 +1,6 @@
 class Tile{
 <<<<<<< HEAD
+<<<<<<< HEAD
   constructor(letter, x, y, width){
     this.width = width;
     this.letter = letter;
@@ -24,16 +25,28 @@ class Tile{
     text(this.letter, this.x + this.width / 4, this.y + this.width / 1.25);
 =======
   constructor(letter){
+=======
+  constructor(letter, x, y){
+>>>>>>> 36a4067 (mew)
     this.width = 40;
     this.letter = letter;
+    this.x = x;
+    this.y = y;
+    this.onBoard = false;
+    this.boardX = 0;
+    this.boardY = 0;
   }
 
-  drawTile(x, y){
+  drawTile(){
     fill(255, 0, 0);
-    square(x, y, this.width);
+    square(this.x, this.y, this.width);
     fill(255, 255, 255);
     textSize(this.width / 1.25);
+<<<<<<< HEAD
     text(this.letter, x + this.width / 4, y + this.width / 1.25);
 >>>>>>> b7e22c9 (mew)
+=======
+    text(this.letter, this.x + this.width / 4, this.y + this.width / 1.25);
+>>>>>>> 36a4067 (mew)
   }
 }
