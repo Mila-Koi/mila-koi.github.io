@@ -841,7 +841,7 @@ function checkWord(){
             if(color.equals(tripleWordColor)){
               pointMultiplier *= 3;
             }
-            else if(color.equals(doubleWordColor)){
+            else if(color.equals(doubleWordColor) || color.equals(centerColor)){
               pointMultiplier *= 2;
             }
           }
@@ -883,7 +883,7 @@ function checkWord(){
                 if(color.equals(tripleWordColor)){
                   pointMultiplier *= 3;
                 }
-                else if(color.equals(doubleWordColor)){
+                else if(color.equals(doubleWordColor) || color.equals(centerColor)){
                   pointMultiplier *= 2;
                 }
               }
@@ -981,7 +981,7 @@ function checkWord(){
             if(color.equals(tripleWordColor)){
               pointMultiplier *= 3;
             }
-            else if(color.equals(doubleWordColor)){
+            else if(color.equals(doubleWordColor) || color.equals(centerColor)){
               pointMultiplier *= 2;
             }
           }
@@ -1023,7 +1023,7 @@ function checkWord(){
                 if(color.equals(tripleWordColor)){
                   pointMultiplier *= 3;
                 }
-                else if(color.equals(doubleWordColor)){
+                else if(color.equals(doubleWordColor) || color.equals(centerColor)){
                   pointMultiplier *= 2;
                 }
               }
