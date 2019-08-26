@@ -19,25 +19,31 @@ class Tile{
   }
 
   drawTile(){
+    let unplayedColor = color(214, 195, 152);
+    let unplayedBlankColor = color(232, 216, 179);
+    let playedColor = color(158, 128, 57);
+    let playedBlankColor = color(184, 155, 86);
+
     if(this.committedToBoard){
       if(this.points == 0){
-        fill(75, 75, 255);
+        fill(playedBlankColor);
       }
       else{
-        fill(0, 0, 255);
+        fill(playedColor);
       }
     }
     else{
       if(this.points == 0){
-        fill(255, 75, 75);
+        fill(unplayedBlankColor);
       }
       else{
-        fill(255, 0, 0);
+        fill(unplayedColor);
       }
     }
     stroke(0, 0, 0);
     strokeWeight(2)
     square(this.x, this.y, this.width);
+<<<<<<< HEAD
     fill(255, 255, 255);
 <<<<<<< HEAD
     textSize(this.width / 1.25);
@@ -86,6 +92,10 @@ class Tile{
     text(this.points, this.x + this.width - 2 - textWidth(this.points.toString()), this.y + this.width - 4);
 >>>>>>> dbc9b40 (mew)
 =======
+=======
+
+    fill(0, 0, 0);
+>>>>>>> 4214f73 (mew)
     noStroke();
     if(this.letter != "BL"){
       textSize(this.width / 1.25);

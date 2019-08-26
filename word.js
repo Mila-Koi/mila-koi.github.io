@@ -298,7 +298,7 @@ function draw(){
 
   strokeWeight(2);
   stroke(0, 0, 0);
-
+  fill(255, 255, 255);
   circle(userPos.x, userPos.y, 10);
   rect(0, windowHeight - bottomPanelHeight, windowWidth, windowHeight - bottomPanelHeight);
 
@@ -818,9 +818,11 @@ function checkWord(){
           else{
             possiblePoints += wordTiles[i].points;
           }
-          possiblePoints *= pointMultiplier;
         }
+        possiblePoints *= pointMultiplier;
         wordList.push([word, possiblePoints]);
+        pointMultiplier = 1;
+        possiblePoints = 0;
 
         for(let i = 0; i < tempBoardTiles.length; i++){
           let tile = tempBoardTiles[i];
@@ -831,6 +833,7 @@ function checkWord(){
             tileAdjacencies.sort((a, b) => (a.y > b.y) ? 1 : -1);
             let verticalWord = "";
             let possiblePoints = 0;
+            let pointMultiplier = 1;
             for(let j = 0; j < tileAdjacencies.length; j++){
               verticalWord += tileAdjacencies[j].letter;
               if(!tileAdjacencies[j].committedToBoard){
@@ -838,20 +841,30 @@ function checkWord(){
                 let boardY = tileAdjacencies[j].boardY;
                 let color = getColor(boardX, boardY);
                 if(color.equals(tripleLetterColor)){
-                  possiblePoints += wordTiles[i].points * 3;
+                  possiblePoints += tileAdjacencies[j].points * 3;
                 }
                 else if(color.equals(doubleLetterColor)){
-                  possiblePoints += wordTiles[i].points * 2;
+                  possiblePoints += tileAdjacencies[j].points * 2;
                 }
-               else{
-                 possiblePoints += wordTiles[i].points;
+                else{
+                  possiblePoints += tileAdjacencies[j].points;
+                }
+
+                if(color.equals(tripleWordColor)){
+                  pointMultiplier *= 3;
+                }
+                else if(color.equals(doubleWordColor)){
+                  pointMultiplier *= 2;
                 }
               }
               else{
                 possiblePoints += tileAdjacencies[j].points;
               }
             }
+            possiblePoints *= pointMultiplier;
             wordList.push([verticalWord, possiblePoints]);
+            pointMultiplier = 1;
+            possiblePoints = 0;
           }
         }
 
@@ -918,11 +931,38 @@ function checkWord(){
         wordTiles.sort((a, b) => (a.y > b.y) ? 1 : -1);
         let word = "";
         let possiblePoints = 0;
+        let pointMultiplier = 1;
         for(let i = 0; i < wordTiles.length; i++){
           word += wordTiles[i].letter;
-          possiblePoints += wordTiles[i].points;
+          let boardX = wordTiles[i].boardX;
+          let boardY = wordTiles[i].boardY;
+          if(!wordTiles[i].committedToBoard){
+            let color = getColor(boardX, boardY);
+            if(color.equals(tripleLetterColor)){
+              possiblePoints += wordTiles[i].points * 3;
+            }
+            else if(color.equals(doubleLetterColor)){
+              possiblePoints += wordTiles[i].points * 2;
+            }
+            else{
+              possiblePoints += wordTiles[i].points;
+            }
+
+            if(color.equals(tripleWordColor)){
+              pointMultiplier *= 3;
+            }
+            else if(color.equals(doubleWordColor)){
+              pointMultiplier *= 2;
+            }
+          }
+          else{
+            possiblePoints += wordTiles[i].points;
+          }
         }
+        possiblePoints *= pointMultiplier;
         wordList.push([word, possiblePoints]);
+        possiblePoints = 0;
+        pointMultiplier = 1;
 
         for(let i = 0; i < tempBoardTiles.length; i++){
           let tile = tempBoardTiles[i];
@@ -933,11 +973,38 @@ function checkWord(){
             tileAdjacencies.sort((a, b) => (a.x > b.x) ? 1 : -1);
             let horizontalWord = "";
             let possiblePoints = 0;
+            let pointMultiplier = 1;
             for(let j = 0; j < tileAdjacencies.length; j++){
               horizontalWord += tileAdjacencies[j].letter;
-              possiblePoints += tileAdjacencies[j].points;
+              if(!tileAdjacencies[j].committedToBoard){
+                let boardX = tileAdjacencies[j].boardX;
+                let boardY = tileAdjacencies[j].boardY;
+                let color = getColor(boardX, boardY);
+                if(color.equals(tripleLetterColor)){
+                  possiblePoints += tileAdjacencies[j].points * 3;
+                }
+                else if(color.equals(doubleLetterColor)){
+                  possiblePoints += tileAdjacencies[j].points * 2;
+                }
+                else{
+                  possiblePoints += tileAdjacencies[j].points;
+                }
+
+                if(color.equals(tripleWordColor)){
+                  pointMultiplier *= 3;
+                }
+                else if(color.equals(doubleWordColor)){
+                  pointMultiplier *= 2;
+                }
+              }
+              else{
+                possiblePoints += tileAdjacencies[j].points;
+              }
             }
+            possiblePoints *= pointMultiplier;
             wordList.push([horizontalWord, possiblePoints]);
+            possiblePoints = 0;
+            pointMultiplier = 1;
           }
         }
 
@@ -1424,6 +1491,16 @@ function getVerticalAdjacencies(boardTiles, xPositions, yPositions){
 }
 
 function commitWord(indices){
+  let numTilesLeft = 0;
+  for(let i = 0; i < userTiles.length; i++){
+    if(!userTiles[i].onBoard){
+      numTilesLeft++;
+    }
+  }
+  if(numTilesLeft == 0){
+    userPoints += 50;
+  }
+
   for(let i = 0; i < indices.length; i++){
     userTiles[indices[i]].committedToBoard = true;
     database.collection("tiles").add({
